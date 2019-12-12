@@ -1,0 +1,21 @@
+.conteudo {
+    width: 70%;
+    padding-bottom: 30px;
+}
+
+.centralizado {
+    text-align: center;
+}
+
+.card-main {
+    background-color: #fff;
+    -webkit-box-shadow: 0px 2px 8px -2px rgba(140,140,140,1);
+    -moz-box-shadow: 0px 2px 8px -2px rgba(140,140,140,1);
+    box-shadow: 0px 2px 8px -2px rgba(140,140,140,1);
+    max-height: 2000px;
+}
+
+.centralizar {
+    display: flex;
+    justify-content: center;
+}
