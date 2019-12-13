@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect'
 import { selectStep } from '../redux/formulario/formulario.selector'
 import { Card, Steps, Button } from 'antd'
 import { irProximoStep, irStepAnterior } from '../redux/formulario/formulario.actions'
-import { Veiculo, Cotacao, EntendaOnsurnance } from '../components'
+import { Veiculo, Cotacao, EntendaOnsurnance, SobreVoce, FormularioFim, ResultadoFormulario } from '../components'
 
 import './style/style.css'
 
@@ -17,8 +17,8 @@ const steps = [
         content: <Cotacao />
     },
     {
-        title: 'Veículo',
-        header: 'Dados do veículo',
+        title: 'Pneu',
+        header: 'Dados do pneu',
         content: <Veiculo />
     },
     {
@@ -27,12 +27,14 @@ const steps = [
         content: <EntendaOnsurnance />
     },
     {
-        title: 'Acessórios',
-        content: null
+        title: 'Sobre você',
+        header: 'Conte-nos sobre você!',
+        content: <SobreVoce />
     },
     {
-        title: 'Sobre você',
-        content: null
+        title: 'Finalizando',
+        header: 'Finalizando',
+        content: <FormularioFim />
     }
 ]
 
@@ -48,33 +50,34 @@ const styles = [
 const IndexComponent = ({ step, irProximoStep, irStepAnterior }) =>  {
     return (
         <div className='conteudo'>
-            <Steps current={step} style={{marginBottom: '30px'}}>
-                {steps.map(item => (
-                    <Step key={item.title} title={item.title} />
-                ))}
-            </Steps>
-            <div className='centralizar'>
-                <Card 
-                    title={<h2>{steps[step].header}</h2>}
-                    className='card-main'
-                    style={ step === 0 ? styles[0] : styles[1]}
-                    actions={[
-                        <Button onClick={irStepAnterior} disabled={step === 0} type="link">Anterior</Button>,
-                        <Button onClick={irProximoStep} disabled={step === 4} type="link">Próximo</Button>
-                    ]}
-                >
-                    {
-                        // step === 0 ? <Cotacao />
-                        // :
-                        // step === 1 ? <Veiculo />
-                        // :
-                        // step === 2 ? <EntendaOnsurnance />
-                        // :
-                        // null
-                        steps[step].content
-                    }
-                </Card>
-            </div>
+            {
+                step === 5 ? 
+                    (<ResultadoFormulario />)
+                :
+                <>
+                    <Steps current={step} style={{marginBottom: '30px'}}>
+                        {steps.map(item => (
+                            <Step key={item.title} title={item.title} />
+                        ))}
+                    </Steps>
+                    <div className='centralizar'>
+                        <Card 
+                            title={<h2>{steps[step].header}</h2>}
+                            className='card-main'
+                            style={ step === 0 ? styles[0] : styles[1]}
+                            actions={ step !== 4 ? [
+                                <Button onClick={irStepAnterior} disabled={step === 0} type="link">Anterior</Button>,
+                                <Button onClick={irProximoStep} disabled={step === 4} type="link">Próximo</Button>
+                            ] : null }
+                            extra={step === 4 ? <Button onClick={irStepAnterior}type="link">Voltar</Button> : null}
+                        >
+                            {
+                                steps[step].content
+                            }
+                        </Card>
+                    </div>
+                </>
+            }
         </div>
     )
 }

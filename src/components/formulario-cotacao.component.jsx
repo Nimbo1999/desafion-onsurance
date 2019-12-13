@@ -6,8 +6,8 @@ const Cotacao = () => {
     return (
         <>
             <p className='paragrafo'>
-                Melhor que seguro tradicional. É seguro sob demanda! Liga/desliga, você paga somente quando usa
-                e economiza quando seu veículo está em segurança.
+                Na Onsurance você encontra as melhores marcas de pneus quanto ao custo benefício da concorrência, 
+                pneus com qualidade e segurança comprovadas realize uma cotação conosco.
             </p>
             <p className='paragrafo'>Descubra agora sua economia nos próximos 4 passos</p>
         </>

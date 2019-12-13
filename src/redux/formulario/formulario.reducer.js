@@ -3,13 +3,10 @@ import { proximoStep, stepAnterior } from './formulario.utils'
 const INITIAL_STATE = {
     veiculo: {
         marca: '',
-        modelo: '',
+        aro: '',
         tipo_de_veiculo: '',
         extra_info: '',
         fabricacao: '',
-        ano: null,
-        valor_fipe: null,
-        teve_seguro: null,
     },
     onsurance: {
         garagem_casa: null,
@@ -39,7 +36,7 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
                 step: stepAnterior(state.step)
             }
 
-        case 'MARCA_VEICULO':
+        case 'MARCA_PNEU':
             return {
                 ...state,
                 veiculo: {
@@ -48,12 +45,12 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
                 }
             }
         
-        case 'MODELO_VEICULO':
+        case 'ARO_PNEU':
             return {
                 ...state,
                 veiculo: {
                     ...state.veiculo,
-                    modelo: action.payload
+                    aro: action.payload
                 }
             }
 
@@ -64,15 +61,6 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
                     ...state.veiculo,
                     tipo_de_veiculo: action.payload,
                     extra_info: ''
-                }
-            }
-
-        case 'TEVE_SEGURO':
-            return {
-                ...state,
-                veiculo: {
-                    ...state.veiculo,
-                    teve_seguro: action.payload
                 }
             }
         
@@ -91,24 +79,6 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
                 veiculo: {
                     ...state.veiculo,
                     fabricacao: action.payload
-                }
-            }
-
-        case 'ANO_DO_MODELO':
-            return {
-                ...state,
-                veiculo: {
-                    ...state.veiculo,
-                    ano: action.payload
-                }
-            }
-
-        case 'VALOR_TABELA_FIPE':
-            return {
-                ...state,
-                veiculo: {
-                    ...state.veiculo,
-                    valor_fipe: action.payload
                 }
             }
 
