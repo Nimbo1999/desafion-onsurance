@@ -6,7 +6,9 @@ import { faMobileAlt, faEnvelope, faMapMarkedAlt } from '@fortawesome/free-solid
 const SobreVoce = () => {
     return (
         <Row gutter={32}>
-            <h2>Precisamos de algumas informações sobre você para prestar um atendimento melhor.</h2>
+            <Col xs={24}>
+                <h2>Precisamos de algumas informações sobre você para prestar um atendimento melhor.</h2>
+            </Col>
             <Col md={24}>
                 <Form.Item label='Qual o seu nome?' colon={false} required>
                     <Input
@@ -17,7 +19,7 @@ const SobreVoce = () => {
             </Col>
             <Col md={12}>
                 <Form.Item label='Celular' required>
-                    <Input 
+                    <Input
                         prefix={<FontAwesomeIcon icon={faMobileAlt} style={{color: '#4db6ac'}} />}
                         // value={veiculo.marca}
                         // onChange={e => handleChange(e.target.value, 'MARCA_PNEU')}
@@ -26,7 +28,7 @@ const SobreVoce = () => {
             </Col>
             <Col md={12}>
                 <Form.Item label='CEP' required>
-                    <Input 
+                    <Input
                         suffix={<FontAwesomeIcon icon={faMapMarkedAlt} style={{color: '#4db6ac'}} />}
                         // value={veiculo.marca}
                         // onChange={e => handleChange(e.target.value, 'MARCA_PNEU')}
@@ -35,7 +37,7 @@ const SobreVoce = () => {
             </Col>
             <Col md={24}>
                 <Form.Item label='Qual o seu email?' colon={false} required>
-                    <Input 
+                    <Input
                         prefix={<FontAwesomeIcon icon={faEnvelope} style={{color: '#4db6ac'}} />}
                         // value={veiculo.marca}
                         // onChange={e => handleChange(e.target.value, 'MARCA_PNEU')}
