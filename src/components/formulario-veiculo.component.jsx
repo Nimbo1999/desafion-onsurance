@@ -18,10 +18,10 @@ const Veiculo = ({veiculo, handleChange}) => {
             <Row gutter={32}>
                 <Col md={24}>
                     <Form.Item label='Marca do Pneu' required>
-                        <Input 
+                        <Input
                             value={veiculo.marca}
                             onChange={e => handleChange(e.target.value, 'MARCA_PNEU')}
-                            placeholder='Bridgestone, Pirelli, Goodyear.' 
+                            placeholder='Bridgestone, Pirelli, Goodyear.'
                         />
                     </Form.Item>
                 </Col>
@@ -53,13 +53,13 @@ const Veiculo = ({veiculo, handleChange}) => {
                     </Form.Item>
                 </Col>
                 {
-                    veiculo.tipo_de_veiculo === 'Carro' ? 
+                    veiculo.tipo_de_veiculo === 'Carro' ?
                         (<Col md={24}>
                             <Form.Item label='Qual o Aro do seu veículo?' required>
                                 <Select
                                     style={{ width: '100%' }}
-                                    onChange={e => handleChange(e, 'EXTRA_INFO')}
-                                    value={veiculo.extra_info}
+                                    onChange={e => handleChange(e, 'ARO_PNEU')}
+                                    value={veiculo.aro}
                                 >
                                     <Option value='15'>15</Option>
                                     <Option value='16'>16</Option>
@@ -70,28 +70,28 @@ const Veiculo = ({veiculo, handleChange}) => {
                                 </Select>
                             </Form.Item>
                         </Col>)
-                    : veiculo.tipo_de_veiculo === 'Moto' ? 
+                    : veiculo.tipo_de_veiculo === 'Moto' ?
                         (<Col xs={24}>
                             <Form.Item
                                 label='Qual o Aro do seu veículo?'
                                 required
                                 >
                                 <Radio.Group
-                                    onChange={e => handleChange(e.target.value, 'EXTRA_INFO')}
-                                    value={veiculo.extra_info}
+                                    onChange={e => handleChange(e.target.value, 'ARO_PNEU')}
+                                    value={veiculo.aro}
                                 >
                                     <Radio value='Liga leve'>Liga leve</Radio>
                                     <Radio value='Roda raiada'>Roda raiada</Radio>
                                 </Radio.Group>
                             </Form.Item>
                         </Col>)
-                    : veiculo.tipo_de_veiculo === 'Caminhonete' ? 
+                    : veiculo.tipo_de_veiculo === 'Caminhonete' ?
                         (<Col md={24}>
                             <Form.Item label='Qual o Aro do seu veículo?' required>
                                 <Select
                                     style={{ width: '100%' }}
-                                    onChange={e => handleChange(e, 'EXTRA_INFO')}
-                                    value={veiculo.extra_info}
+                                    onChange={e => handleChange(e, 'ARO_PNEU')}
+                                    value={veiculo.aro}
                                 >
                                     <Option value='15'>15</Option>
                                     <Option value='16'>16</Option>

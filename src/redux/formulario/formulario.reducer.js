@@ -5,7 +5,6 @@ const INITIAL_STATE = {
         marca: '',
         aro: '',
         tipo_de_veiculo: '',
-        extra_info: '',
         fabricacao: '',
     },
     onsurance: {
@@ -23,7 +22,7 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 veiculo: action.payload
             }
-        
+
         case 'PROXIMO_STEP':
             return {
                 ...state,
@@ -44,7 +43,7 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
                     marca: action.payload
                 }
             }
-        
+
         case 'ARO_PNEU':
             return {
                 ...state,
@@ -60,16 +59,7 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
                 veiculo: {
                     ...state.veiculo,
                     tipo_de_veiculo: action.payload,
-                    extra_info: ''
-                }
-            }
-        
-        case 'EXTRA_INFO':
-            return {
-                ...state,
-                veiculo: {
-                    ...state.veiculo,
-                    extra_info: action.payload
+                    aro: ''
                 }
             }
 
@@ -108,7 +98,7 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
                     garagem_trabalho: action.payload
                 }
             }
-    
+
         default:
             return state
     }
