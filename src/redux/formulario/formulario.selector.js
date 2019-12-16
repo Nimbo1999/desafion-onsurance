@@ -21,3 +21,8 @@ export const selectUsuario = createSelector(
     [selectFormulario],
     form => form.usuario
 )
+
+export const selectResults = createSelector(
+    [selectFormulario],
+    form => form.results
+)

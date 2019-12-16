@@ -7,6 +7,9 @@ const INITIAL_STATE = {
         aro: '',
         tipo_de_veiculo: '',
         fabricacao: '',
+        qtd: null,
+        total: null,
+        vehiclePlate: ''
     },
     onsurance: {
         garagem_casa: null,
@@ -15,10 +18,12 @@ const INITIAL_STATE = {
     },
     usuario: {
         nome: '',
+        sobreNome: '',
         telefone: '',
         cep: '',
         email: ''
     },
+    results: {},
     step: 0
 }
 
@@ -120,6 +125,33 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
                 }
             }
 
+        case 'PLACA_DO_VEICULO':
+            return {
+                ...state,
+                veiculo: {
+                    ...state.veiculo,
+                    vehiclePlate: action.payload
+                }
+            }
+
+        case 'VALOR_TOTAL_PNEU':
+            return {
+                ...state,
+                veiculo: {
+                    ...state.veiculo,
+                    total: action.payload
+                }
+            }
+
+        case 'QUANTIDADE_PNEU':
+            return {
+                ...state,
+                veiculo: {
+                    ...state.veiculo,
+                    qtd: action.payload
+                }
+            }
+
         case 'ARO_PNEU':
             return {
                 ...state,
@@ -184,6 +216,15 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
                 }
             }
 
+        case 'USUARIO_SOBRENOME':
+            return {
+                ...state,
+                usuario: {
+                    ...state.usuario,
+                    sobreNome: action.payload
+                }
+            }
+
         case 'USUARIO_TELEFONE':
             return {
                 ...state,
@@ -209,6 +250,12 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
                     ...state.usuario,
                     email: action.payload
                 }
+            }
+
+        case 'RESULTADO_FINAL':
+            return {
+                ...state,
+                results: action.payload
             }
 
         default:

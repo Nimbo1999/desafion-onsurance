@@ -7,14 +7,15 @@ import { handleChange } from '../redux/formulario/formulario.actions'
 
 import './style/style.css'
 
-// /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
-
 const { Option } = Select
 
 const ErroMarca = () => <p style={{color: '#e57373', fontSize: '14px'}}>A marca do veículo deve ser informada!</p>
 const ErroFabricacao = () => <p style={{color: '#e57373', fontSize: '14px'}}>Você deve informar a fabricação do pneu!</p>
 const ErroTipoV = () => <p style={{color: '#e57373', fontSize: '14px'}}>É necessário informar o tipo do veículo!</p>
 const ErroAro = () => <p style={{color: '#e57373', fontSize: '14px'}}>Obrigatório informar o aro do veículo!</p>
+const ErroTotal = () => <p style={{color: '#e57373', fontSize: '14px'}}>É obrigatório informar o valor total do pneu!</p>
+const ErroQtd = () => <p style={{color: '#e57373', fontSize: '14px'}}>É Obrigatório informar a quantidade de pneus!</p>
+const ErroPlaca = () => <p style={{color: '#e57373', fontSize: '14px'}}>É Obrigatório informar a placa do seu veículo!</p>
 
 
 const Veiculo = ({veiculo, handleChange}) => {
@@ -64,14 +65,14 @@ const Veiculo = ({veiculo, handleChange}) => {
                             onChange={(e) => handleChange(e, 'TIPO_DE_VEICULO')}
                             value={veiculo.tipo_de_veiculo}
                         >
-                            <Option value='Carro'>Carro</Option>
-                            <Option value='Moto'>Moto</Option>
-                            <Option value='Caminhonete'>Caminhonete</Option>
+                            <Option value='car'>Carro</Option>
+                            <Option value='moto'>Moto</Option>
+                            <Option value='caminhonete'>Caminhonete</Option>
                         </Select>
                     </Form.Item>
                 </Col>
                 {
-                    veiculo.tipo_de_veiculo === 'Carro' ?
+                    veiculo.tipo_de_veiculo === 'car' ?
                         (<Col md={24}>
                             <Form.Item
                                 label='Qual o Aro do seu veículo?'
@@ -92,7 +93,7 @@ const Veiculo = ({veiculo, handleChange}) => {
                                 </Select>
                             </Form.Item>
                         </Col>)
-                    : veiculo.tipo_de_veiculo === 'Moto' ?
+                    : veiculo.tipo_de_veiculo === 'moto' ?
                         (<Col xs={24}>
                             <Form.Item
                                 label='Qual o Aro do seu veículo?'
@@ -108,7 +109,7 @@ const Veiculo = ({veiculo, handleChange}) => {
                                 </Radio.Group>
                             </Form.Item>
                         </Col>)
-                    : veiculo.tipo_de_veiculo === 'Caminhonete' ?
+                    : veiculo.tipo_de_veiculo === 'caminhonete' ?
                         (<Col md={24}>
                             <Form.Item
                                 label='Qual o Aro do seu veículo?'
@@ -131,6 +132,52 @@ const Veiculo = ({veiculo, handleChange}) => {
                         </Col>)
                     : null
                 }
+                <Col md={12}>
+                    <Form.Item 
+                        label='Valor total dos pneus'
+                        required
+                        extra={ veiculo.errors ? veiculo.errors.total ? <ErroTotal /> : null : null }
+                    >
+                        <Input
+                            value={veiculo.total}
+                            onChange={e => {
+                                let valor = e.target.value
+                                valor = valor.replace(/\D/g, '')
+                                handleChange(valor, 'VALOR_TOTAL_PNEU')
+                            }}
+                            placeholder='Apenas números inteiros'
+                        />
+                    </Form.Item>
+                </Col>
+                <Col md={12}>
+                    <Form.Item 
+                        label='Quantidade de pneus'
+                        required
+                        extra={ veiculo.errors ? veiculo.errors.qtd ? <ErroQtd /> : null : null }
+                    >
+                        <Input
+                            value={veiculo.qtd}
+                            onChange={e => {
+                                let valor = e.target.value
+                                valor = valor.replace(/\D/g, '')
+                                handleChange(valor, 'QUANTIDADE_PNEU')
+                            }}
+                            placeholder='Apenas números inteiros'
+                        />
+                    </Form.Item>
+                </Col>
+                <Col md={24}>
+                    <Form.Item 
+                        label='Placa do seu veículo'
+                        required
+                        extra={ veiculo.errors ? veiculo.errors.vehiclePlate ? <ErroPlaca /> : null : null }
+                    >
+                        <Input
+                            value={veiculo.vehiclePlate}
+                            onChange={e => handleChange(e.target.value, 'PLACA_DO_VEICULO')}
+                        />
+                    </Form.Item>
+                </Col>
             </Row>
         </>
     )

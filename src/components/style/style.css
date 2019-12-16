@@ -56,3 +56,8 @@
 .cart-icon {
     color: #000;
 }
+
+.link-externo {
+    text-decoration: none;
+    text-align: center;
+}

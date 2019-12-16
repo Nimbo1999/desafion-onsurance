@@ -22,6 +22,15 @@ export const verificaStep = (stepNumber, stepValue) => {
             if(stepValue.fabricacao === ''){
                 errors = { ...errors, fabricacao: true }
             }
+            if(stepValue.qtd === null || stepValue.qtd === ''){
+                errors = { ...errors, qtd: true }
+            }
+            if(stepValue.total === null || stepValue.total === ''){
+                errors = { ...errors, total: true }
+            }
+            if(stepValue.vehiclePlate === ''){
+                errors = { ...errors, vehiclePlate: true }
+            }
             break;
         case 2:
             if(stepValue.garagem_casa === null){
@@ -37,6 +46,9 @@ export const verificaStep = (stepNumber, stepValue) => {
         case 3:
             if(stepValue.nome === ''){
                 errors = { ...errors, nome: true }
+            }
+            if(stepValue.sobreNome === ''){
+                errors = { ...errors, sobreNome: true }
             }
             if(stepValue.telefone === ''){
                 errors = { ...errors, telefone: 'É obrigatório informar o seu número!' }
