@@ -67,7 +67,22 @@ const IndexComponent = ({ step, irProximoStep, irStepAnterior }) =>  {
                             style={ step === 0 ? styles[0] : styles[1]}
                             actions={ step !== 4 ? [
                                 <Button onClick={irStepAnterior} disabled={step === 0} type="link">Anterior</Button>,
-                                <Button onClick={irProximoStep} disabled={step === 4} type="link">Próximo</Button>
+                                <Button onClick={() => {
+                                    switch(step){
+                                        case 0:
+                                            irProximoStep('PROXIMO_STEP')
+                                            break
+                                        case 1:
+                                            irProximoStep('PROXIMO_STEP_1')
+                                            break
+                                        case 2:
+                                            irProximoStep('PROXIMO_STEP_2')
+                                            break
+                                        default:
+                                            irProximoStep('PROXIMO_STEP_3')
+                                            break
+                                    }
+                                }} disabled={step === 4} type="link">Próximo</Button>
                             ] : null }
                             extra={step === 4 ? <Button onClick={irStepAnterior}type="link">Voltar</Button> : null}
                         >

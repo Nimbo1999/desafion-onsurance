@@ -10,7 +10,7 @@ const FormularioFim = ({ irProximoStep }) => {
             title='Todas as informações foram coletadas!'
             subTitle='Para visualizar o resultado precione o botão de confirmar.'
             extra={
-                <Button onClick={() => irProximoStep()}>
+                <Button onClick={() => irProximoStep('PROXIMO_STEP_4')}>
                     Confirmar
                 </Button>
             }

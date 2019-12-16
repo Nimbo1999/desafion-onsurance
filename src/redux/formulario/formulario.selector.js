@@ -16,3 +16,8 @@ export const selectOnsurance = createSelector(
     [selectFormulario],
     form => form.onsurance
 )
+
+export const selectUsuario = createSelector(
+    [selectFormulario],
+    form => form.usuario
+)

@@ -3,8 +3,8 @@ export const adicionarVeiculo = item => ({
     payload: item
 })
 
-export const irProximoStep = () => ({
-    type: 'PROXIMO_STEP'
+export const irProximoStep = step => ({
+    type: step
 })
 
 export const irStepAnterior = () => ({

@@ -12,6 +12,12 @@ const INITIAL_STATE = {
         garagem_trabalho: null,
         horas_por_dia: 1
     },
+    usuario: {
+        nome: '',
+        telefone: '',
+        cep: '',
+        email: ''
+    },
     step: 0
 }
 
@@ -24,6 +30,30 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
             }
 
         case 'PROXIMO_STEP':
+            return {
+                ...state,
+                step: proximoStep(state.step)
+            }
+
+        case 'PROXIMO_STEP_1':
+            return {
+                ...state,
+                step: proximoStep(state.step)
+            }
+
+        case 'PROXIMO_STEP_2':
+            return {
+                ...state,
+                step: proximoStep(state.step)
+            }
+
+        case 'PROXIMO_STEP_3':
+            return {
+                ...state,
+                step: proximoStep(state.step)
+            }
+
+        case 'PROXIMO_STEP_4':
             return {
                 ...state,
                 step: proximoStep(state.step)
@@ -96,6 +126,42 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
                 onsurance: {
                     ...state.onsurance,
                     garagem_trabalho: action.payload
+                }
+            }
+
+        case 'USUARIO_NOME':
+            return {
+                ...state,
+                usuario: {
+                    ...state.usuario,
+                    nome: action.payload
+                }
+            }
+
+        case 'USUARIO_TELEFONE':
+            return {
+                ...state,
+                usuario: {
+                    ...state.usuario,
+                    telefone: action.payload
+                }
+            }
+
+        case 'USUARIO_CEP':
+            return {
+                ...state,
+                usuario: {
+                    ...state.usuario,
+                    cep: action.payload
+                }
+            }
+
+        case 'USUARIO_EMAIL':
+            return {
+                ...state,
+                usuario: {
+                    ...state.usuario,
+                    email: action.payload
                 }
             }
 
