@@ -40,7 +40,7 @@ export const verificaStep = (stepNumber, stepValue) => {
             }
             if(stepValue.telefone === ''){
                 errors = { ...errors, telefone: 'É obrigatório informar o seu número!' }
-            } else if(!/\(\d{2}\)\s\d{4,5}\-\d{4}/.test(stepValue.telefone)){
+            } else if(!/\(\d{2}\)\s\d{4,5}-\d{4}/g.test(stepValue.telefone)){
                 errors = { ...errors, telefone: 'Esse número de telefone não é válido!' }
             }
             if(stepValue.cep === ''){
@@ -51,6 +51,9 @@ export const verificaStep = (stepNumber, stepValue) => {
             } else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(stepValue.email)){
                 errors = { ...errors, email: 'Esse Email não é válido!' }
             }
+            break;
+        default:
+            console.log('Error no útils, linha 56')
             break;
     }
     return errors
