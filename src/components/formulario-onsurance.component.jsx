@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Radio, Form, InputNumber } from 'antd'
+import { Row, Col, Radio, Form, Input } from 'antd'
 import { TooltipHelp, TempoResult } from '../components'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
@@ -7,6 +7,8 @@ import { handleChange } from '../redux/formulario/formulario.actions'
 import { selectOnsurance } from '../redux/formulario/formulario.selector'
 
 import './style/style.css'
+
+const ErroGaragem = () => <p style={{color: '#e57373', fontSize: '14px'}}>É obrigatório escolher uma opção!</p>
 
 const EntendaOnsurnance = ({ onsurance, handleChange }) => {
     console.log(onsurance)
@@ -20,6 +22,7 @@ const EntendaOnsurnance = ({ onsurance, handleChange }) => {
                     </>}
                     colon={false}
                     required
+                    extra={ onsurance.errors ? onsurance.errors.garagem_casa ? <ErroGaragem /> : null : null }
                 >
                     <Radio.Group
                         onChange={e => handleChange(e.target.value, 'GARAGEM_CASA')}
@@ -38,6 +41,7 @@ const EntendaOnsurnance = ({ onsurance, handleChange }) => {
                     </>}
                     colon={false}
                     required
+                    extra={ onsurance.errors ? onsurance.errors.garagem_trabalho ? <ErroGaragem /> : null : null }
                 >
                     <Radio.Group
                         onChange={e => handleChange(e.target.value, 'GARAGEM_TRABALHO')}
@@ -55,11 +59,21 @@ const EntendaOnsurnance = ({ onsurance, handleChange }) => {
                     extra='Digite quantas horas diárias você estima que utiliza o seu veículo. Pense num uso médio da semana.
                     Considere menos de 1 hora se você não usa o carro todo dia.'
                 >
-                    <InputNumber 
-                        style={{width: '100%'}}
-                        min={1}
-                        max={24}
-                        onChange={(e) => handleChange(e, 'ON_HORAS_POR_DIA')}
+                    <Input
+                        extra={null}
+                        onChange={(e) => {
+                            let value = e.target.value
+                            if(value === '' || /[a-zA-Z]/.test(value) ){
+                                value = '1'
+                            }
+                            value = Number.parseInt(value.replace(/[^1-9]+/g, ''))
+                            if (value < 1){
+                                value = 1
+                            } else if (value > 24){
+                                value = 24
+                            }
+                            handleChange(value, 'ON_HORAS_POR_DIA')
+                        }}
                         value={onsurance.horas_por_dia}
                     />
                 </Form.Item>

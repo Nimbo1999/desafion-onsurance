@@ -7,6 +7,10 @@ import { connect } from 'react-redux'
 import { handleChange } from '../redux/formulario/formulario.actions'
 import { createStructuredSelector } from 'reselect'
 
+const ErroNome = () => <p style={{color: '#e57373', fontSize: '14px'}}>É obrigatório informar seu nome!</p>
+const ErroCep = () => <p style={{color: '#e57373', fontSize: '14px'}}>É obrigatório informar seu cep!</p>
+const ErroPersonalizado = ({msg}) => <p style={{color: '#e57373', fontSize: '14px'}}>{msg}</p>
+
 const SobreVoce = ({ usuario, handleChange }) => {
     console.log(usuario)
     return (
@@ -15,7 +19,12 @@ const SobreVoce = ({ usuario, handleChange }) => {
                 <h2>Precisamos de algumas informações sobre você para prestar um atendimento melhor.</h2>
             </Col>
             <Col md={24}>
-                <Form.Item label='Qual o seu nome?' colon={false} required>
+                <Form.Item
+                    label='Qual o seu nome?'
+                    colon={false}
+                    required
+                    extra={ usuario.errors ? usuario.errors.nome ? <ErroNome /> : null : null }
+                >
                     <Input
                         value={usuario.nome}
                         onChange={e => {
@@ -25,7 +34,11 @@ const SobreVoce = ({ usuario, handleChange }) => {
                 </Form.Item>
             </Col>
             <Col md={12}>
-                <Form.Item label='Telefone' required>
+                <Form.Item
+                    label='Telefone'
+                    required
+                    extra={ usuario.errors ? usuario.errors.telefone ? <ErroPersonalizado msg={usuario.errors.telefone} /> : null : null }
+                >
                     <Input
                         prefix={<FontAwesomeIcon icon={faMobileAlt} style={{color: '#4db6ac'}} />}
                         value={usuario.telefone}
@@ -42,7 +55,11 @@ const SobreVoce = ({ usuario, handleChange }) => {
                 </Form.Item>
             </Col>
             <Col md={12}>
-                <Form.Item label='CEP' required>
+                <Form.Item
+                    label='CEP'
+                    required
+                    extra={ usuario.errors ? usuario.errors.cep ? <ErroCep /> : null : null }
+                >
                     <Input
                         suffix={<FontAwesomeIcon icon={faMapMarkedAlt} style={{color: '#4db6ac'}} />}
                         value={usuario.cep}
@@ -57,7 +74,12 @@ const SobreVoce = ({ usuario, handleChange }) => {
                 </Form.Item>
             </Col>
             <Col md={24}>
-                <Form.Item label='Qual o seu email?' colon={false} required>
+                <Form.Item
+                    label='Qual o seu email?'
+                    colon={false}
+                    required
+                    extra={ usuario.errors ? usuario.errors.email ? <ErroPersonalizado msg={usuario.errors.email} /> : null : null }
+                >
                     <Input
                         prefix={<FontAwesomeIcon icon={faEnvelope} style={{color: '#4db6ac'}} />}
                         value={usuario.email}

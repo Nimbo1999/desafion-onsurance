@@ -22,6 +22,12 @@ const INITIAL_STATE = {
     step: 0
 }
 
+const Notificar = () => notification.error({
+    message: 'Erro(s) no formulário',
+    description: 'Erro ao submeter as insformações.',
+    duration: 2
+})
+
 const formularioReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'ADICIONAR_VEICULO':
@@ -39,11 +45,7 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
         case 'PROXIMO_STEP_1':
             const errors = verificaStep(state.step, state.veiculo)
             if(!isEmptyObject(errors)){
-                notification.error({
-                    message: 'Erro(s) no formulário',
-                    description: 'Erro ao submeter as insformações.',
-                    duration: 2
-                })
+                Notificar()
                 return {
                     ...state,
                     veiculo: {
@@ -62,14 +64,44 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
             }
 
         case 'PROXIMO_STEP_2':
+            const errors2 = verificaStep(state.step, state.onsurance)
+            if(!isEmptyObject(errors2)){
+                Notificar()
+                return {
+                    ...state,
+                    onsurance: {
+                        ...state.onsurance,
+                        errors: errors2
+                    }
+                }
+            }
             return {
                 ...state,
+                onsurance: {
+                    ...state.onsurance,
+                    errors: {}
+                },
                 step: proximoStep(state.step)
             }
 
         case 'PROXIMO_STEP_3':
+            const errors3 = verificaStep(state.step, state.usuario)
+            if(!isEmptyObject(errors3)){
+                Notificar()
+                return {
+                    ...state,
+                    usuario: {
+                        ...state.usuario,
+                        errors: errors3
+                    }
+                }
+            }
             return {
                 ...state,
+                usuario: {
+                    ...state.usuario,
+                    errors: {}
+                },
                 step: proximoStep(state.step)
             }
 
