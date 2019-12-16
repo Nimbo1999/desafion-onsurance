@@ -11,13 +11,23 @@ import './style/style.css'
 
 const { Option } = Select
 
+const ErroMarca = () => <p style={{color: '#e57373', fontSize: '14px'}}>A marca do veículo deve ser informada!</p>
+const ErroFabricacao = () => <p style={{color: '#e57373', fontSize: '14px'}}>Você deve informar a fabricação do pneu!</p>
+const ErroTipoV = () => <p style={{color: '#e57373', fontSize: '14px'}}>É necessário informar o tipo do veículo!</p>
+const ErroAro = () => <p style={{color: '#e57373', fontSize: '14px'}}>Obrigatório informar o aro do veículo!</p>
+
+
 const Veiculo = ({veiculo, handleChange}) => {
     console.log(veiculo)
     return (
         <>
             <Row gutter={32}>
                 <Col md={24}>
-                    <Form.Item label='Marca do Pneu' required>
+                    <Form.Item 
+                        label='Marca do Pneu'
+                        required
+                        extra={ veiculo.errors ? veiculo.errors.marca ? <ErroMarca /> : null : null }
+                    >
                         <Input
                             value={veiculo.marca}
                             onChange={e => handleChange(e.target.value, 'MARCA_PNEU')}
@@ -26,7 +36,11 @@ const Veiculo = ({veiculo, handleChange}) => {
                     </Form.Item>
                 </Col>
                 <Col md={12}>
-                    <Form.Item label='Fabricação' required>
+                    <Form.Item
+                        label='Fabricação'
+                        required
+                        extra={ veiculo.errors ? veiculo.errors.fabricacao ? <ErroFabricacao /> : null : null }
+                    >
                         <Select
                             style={{ width: '100%' }}
                             placeholder='Selecione a opção de fabricação do seu pneu'
@@ -39,7 +53,11 @@ const Veiculo = ({veiculo, handleChange}) => {
                     </Form.Item>
                 </Col>
                 <Col md={12}>
-                    <Form.Item label='Tipo de veículo' required>
+                    <Form.Item
+                        label='Tipo de veículo'
+                        required
+                        extra={ veiculo.errors ? veiculo.errors.tipo_de_veiculo ? <ErroTipoV /> : null : null }
+                    >
                         <Select
                             style={{ width: '100%' }}
                             placeholder='Selecione seu tipo de veículo'
@@ -55,7 +73,11 @@ const Veiculo = ({veiculo, handleChange}) => {
                 {
                     veiculo.tipo_de_veiculo === 'Carro' ?
                         (<Col md={24}>
-                            <Form.Item label='Qual o Aro do seu veículo?' required>
+                            <Form.Item
+                                label='Qual o Aro do seu veículo?'
+                                required
+                                extra={ veiculo.errors ? veiculo.errors.aro ? <ErroAro /> : null : null }
+                            >
                                 <Select
                                     style={{ width: '100%' }}
                                     onChange={e => handleChange(e, 'ARO_PNEU')}
@@ -75,7 +97,8 @@ const Veiculo = ({veiculo, handleChange}) => {
                             <Form.Item
                                 label='Qual o Aro do seu veículo?'
                                 required
-                                >
+                                extra={ veiculo.errors ? veiculo.errors.aro ? <ErroAro /> : null : null }
+                            >
                                 <Radio.Group
                                     onChange={e => handleChange(e.target.value, 'ARO_PNEU')}
                                     value={veiculo.aro}
@@ -87,18 +110,22 @@ const Veiculo = ({veiculo, handleChange}) => {
                         </Col>)
                     : veiculo.tipo_de_veiculo === 'Caminhonete' ?
                         (<Col md={24}>
-                            <Form.Item label='Qual o Aro do seu veículo?' required>
+                            <Form.Item
+                                label='Qual o Aro do seu veículo?'
+                                required
+                                extra={ veiculo.errors ? veiculo.errors.aro ? <ErroAro /> : null : null }
+                            >
                                 <Select
                                     style={{ width: '100%' }}
                                     onChange={e => handleChange(e, 'ARO_PNEU')}
                                     value={veiculo.aro}
                                 >
                                     <Option value='15'>15</Option>
+                                    <Option value='17.5'>17.5</Option>
                                     <Option value='16'>16</Option>
-                                    <Option value='17'>17</Option>
-                                    <Option value='18'>18</Option>
                                     <Option value='20'>20</Option>
-                                    <Option value='22'>22</Option>
+                                    <Option value='22.5'>22.5</Option>
+
                                 </Select>
                             </Form.Item>
                         </Col>)

@@ -1,4 +1,5 @@
-import { proximoStep, stepAnterior } from './formulario.utils'
+import { proximoStep, stepAnterior, verificaStep, isEmptyObject } from './formulario.utils'
+import { notification } from 'antd'
 
 const INITIAL_STATE = {
     veiculo: {
@@ -36,8 +37,27 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
             }
 
         case 'PROXIMO_STEP_1':
+            const errors = verificaStep(state.step, state.veiculo)
+            if(!isEmptyObject(errors)){
+                notification.error({
+                    message: 'Erro(s) no formulário',
+                    description: 'Erro ao submeter as insformações.',
+                    duration: 2
+                })
+                return {
+                    ...state,
+                    veiculo: {
+                        ...state.veiculo,
+                        errors: errors
+                    }
+                }
+            }
             return {
                 ...state,
+                veiculo: {
+                    ...state.veiculo,
+                    errors: {}
+                },
                 step: proximoStep(state.step)
             }
 
@@ -48,12 +68,6 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
             }
 
         case 'PROXIMO_STEP_3':
-            return {
-                ...state,
-                step: proximoStep(state.step)
-            }
-
-        case 'PROXIMO_STEP_4':
             return {
                 ...state,
                 step: proximoStep(state.step)
