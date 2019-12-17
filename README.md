@@ -5,7 +5,7 @@
 1) Clone este projeto com o comando git a seguir: 
 ```
 git clone https://github.com/Nimbo1999/desafion-onsurance.git
-``
+```
 
 2) Entre na pasta em que o projeto foi clonado e certifique-se de que esteja na pasta raiz. Utilize o package.json como referência
 
