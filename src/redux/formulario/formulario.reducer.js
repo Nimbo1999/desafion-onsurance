@@ -24,7 +24,8 @@ const INITIAL_STATE = {
         email: ''
     },
     results: {},
-    step: 0
+    step: 0,
+    loading: false
 }
 
 const Notificar = () => notification.error({
@@ -256,6 +257,12 @@ const formularioReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 results: action.payload
+            }
+
+        case 'SET_LOADING':
+            return {
+                ...state,
+                loading: action.payload
             }
 
         default:

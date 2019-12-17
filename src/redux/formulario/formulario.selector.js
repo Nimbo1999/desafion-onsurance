@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-const selectFormulario = state => state.formulario;
+export const selectFormulario = state => state.formulario;
 
 export const selectFormularioVeiculo = createSelector(
     [selectFormulario],
@@ -25,4 +25,9 @@ export const selectUsuario = createSelector(
 export const selectResults = createSelector(
     [selectFormulario],
     form => form.results
+)
+
+export const SelectLoading = createSelector(
+    [selectFormulario],
+    form => form.loading
 )

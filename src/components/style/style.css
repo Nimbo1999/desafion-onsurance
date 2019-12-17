@@ -4,6 +4,7 @@
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
+    background-color: #fff;
 }
 
 .header .logo-container { /* div que segura a logo */

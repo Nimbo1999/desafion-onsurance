@@ -9,6 +9,7 @@ import { selectOnsurance } from '../redux/formulario/formulario.selector'
 import './style/style.css'
 
 const ErroGaragem = () => <p style={{color: '#e57373', fontSize: '14px'}}>É obrigatório escolher uma opção!</p>
+const ErroHoras = () => <p style={{color: '#e57373', fontSize: '14px'}}>Esse campo é obrigatório!</p>
 
 const EntendaOnsurnance = ({ onsurance, handleChange }) => {
     console.log(onsurance)
@@ -56,18 +57,17 @@ const EntendaOnsurnance = ({ onsurance, handleChange }) => {
                 <Form.Item
                     colon={false}
                     label='Levando em consideração os cenários apresentados acima, quantas horas por dia estima utilizar seu veículo?'
-                    extra='Digite quantas horas diárias você estima que utiliza o seu veículo. Pense num uso médio da semana.
-                    Considere menos de 1 hora se você não usa o carro todo dia.'
+                    extra={ onsurance.errors ? onsurance.errors.horas_por_dia ? <ErroHoras /> : null : null }
                 >
                     <Input
-                        extra={null}
+                        placeholder='Digite quantas horas diárias você estima que utiliza o seu veículo. Pense num uso médio da semana.
+                        Considere menos de 1 hora se você não usa o carro todo dia.'
                         onChange={(e) => {
                             let value = e.target.value
-                            if(value === '' || /[a-zA-Z]/.test(value) ){
-                                value = '1'
-                            }
-                            value = Number.parseInt(value.replace(/[^1-9]+/g, ''))
-                            if (value < 1){
+                            value = Number.parseInt(value.replace(/\D/g, ''))
+                            if(isNaN(value)){
+                                value = ''
+                            }else if (value < 0){
                                 value = 1
                             } else if (value > 24){
                                 value = 24

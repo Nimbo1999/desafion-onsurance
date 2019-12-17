@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { selectStep } from '../redux/formulario/formulario.selector'
-import { Card, Steps, Button } from 'antd'
-import { irProximoStep, irStepAnterior } from '../redux/formulario/formulario.actions'
-import { Veiculo, Cotacao, EntendaOnsurnance, SobreVoce, FormularioFim, ResultadoFormulario } from '../components'
+import { selectStep, selectFormulario, SelectLoading } from '../redux/formulario/formulario.selector'
+import { Card, Steps, Button, message } from 'antd'
+import { irProximoStep, irStepAnterior, handleChange } from '../redux/formulario/formulario.actions'
+import { Veiculo, Cotacao, EntendaOnsurnance, SobreVoce, ResultadoFormulario } from '../components'
 
 import './style/style.css'
 
@@ -28,13 +28,13 @@ const steps = [
     },
     {
         title: 'Sobre você',
-        header: 'Conte-nos sobre você!',
+        header: 'Conte-nos sobre você',
         content: <SobreVoce />
     },
     {
-        title: 'Finalizando',
-        header: 'Finalizando',
-        content: <FormularioFim />
+        title: 'Resultado',
+        header: 'Resultado da cotação',
+        content: <ResultadoFormulario />
     }
 ]
 
@@ -43,11 +43,11 @@ const styles = [
         width: '50%'
     },
     {
-        width: '70%'
+        width: '100%'
     },
 ]
 
-const IndexComponent = ({ step, irProximoStep, irStepAnterior }) =>  {
+const IndexComponent = ({ step, irProximoStep, irStepAnterior, state, handleChange, loading }) =>  {
     return (
         <div className='conteudo'>
             {
@@ -65,26 +65,50 @@ const IndexComponent = ({ step, irProximoStep, irStepAnterior }) =>  {
                             title={<h2>{steps[step].header}</h2>}
                             className='card-main'
                             style={ step === 0 ? styles[0] : styles[1]}
-                            actions={ step !== 4 ? [
+                            actions={[
                                 <Button onClick={irStepAnterior} disabled={step === 0} type="link">Anterior</Button>,
-                                <Button onClick={() => {
+                                <Button onClick={async () => {
                                     switch(step){
                                         case 0:
-                                            irProximoStep('PROXIMO_STEP')
+                                            await irProximoStep('PROXIMO_STEP')
                                             break
                                         case 1:
-                                            irProximoStep('PROXIMO_STEP_1')
+                                            await irProximoStep('PROXIMO_STEP_1')
                                             break
                                         case 2:
-                                            irProximoStep('PROXIMO_STEP_2')
+                                            await irProximoStep('PROXIMO_STEP_2')
                                             break
                                         default:
-                                            irProximoStep('PROXIMO_STEP_3')
+                                            handleChange(true, 'SET_LOADING')
+                                            const requestOptions = {
+                                                method: 'GET',
+                                                redirect: 'follow'
+                                            }
+                                            let telefone = state.usuario.telefone.replace(/\D/g, '')
+                                            const params = {
+                                                totalValue: Number.parseInt(state.veiculo.total),
+                                                qtd: Number.parseInt(state.veiculo.qtd),
+                                                vehicleType: state.veiculo.tipo_de_veiculo,
+                                                firstName: state.usuario.nome,
+                                                lastName: state.usuario.sobreNome,
+                                                userEmail: state.usuario.email,
+                                                vehiclePlate: state.veiculo.vehiclePlate,
+                                                dailyUsage: state.onsurance.horas_por_dia,
+                                                phone: telefone
+                                            }
+                                            const url = `https://us-central1-onsurance-new.cloudfunctions.net/quote/tires?totalValue=${params.totalValue}&qtd=${params.qtd}&vehicleType=${params.vehicleType}&firstName=${params.firstName}&lastName=${params.lastName}&userEmail=${params.userEmail}&vehiclePlate=${params.vehiclePlate}&dailyUsage=${params.dailyUsage}&phone=${params.phone}`
+                                            await fetch(url, requestOptions)
+                                            .then(response => response.json())
+                                            .then(result => {
+                                                handleChange(false, 'SET_LOADING')
+                                                handleChange(result, 'RESULTADO_FINAL')
+                                                irProximoStep('PROXIMO_STEP_3')
+                                            })
+                                            .catch(e => message.error('Houve uma falha na comunicação com o servidor, tente mais tarde.', 3, () => irStepAnterior()))
                                             break
                                     }
-                                }} disabled={step === 4} type="link">Próximo</Button>
-                            ] : null }
-                            extra={step === 4 ? <Button onClick={irStepAnterior}type="link">Voltar</Button> : null}
+                                }} disabled={step === 4} type="link" loading={loading}>Próximo</Button>
+                            ]}
                         >
                             {
                                 steps[step].content
@@ -99,11 +123,14 @@ const IndexComponent = ({ step, irProximoStep, irStepAnterior }) =>  {
 
 const mapDispatchToProps = dispatch => ({
     irProximoStep: item => dispatch(irProximoStep(item)),
-    irStepAnterior: item => dispatch(irStepAnterior(item))
+    irStepAnterior: item => dispatch(irStepAnterior(item)),
+    handleChange: (item, tipo) => dispatch(handleChange(item, tipo))
 })
 
 const mapStateToProps = createStructuredSelector({
-    step: selectStep
+    step: selectStep,
+    state: selectFormulario,
+    loading: SelectLoading
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(IndexComponent)
