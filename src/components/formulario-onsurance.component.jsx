@@ -60,8 +60,7 @@ const EntendaOnsurnance = ({ onsurance, handleChange }) => {
                     extra={ onsurance.errors ? onsurance.errors.horas_por_dia ? <ErroHoras /> : null : null }
                 >
                     <Input
-                        placeholder='Digite quantas horas diárias você estima que utiliza o seu veículo. Pense num uso médio da semana.
-                        Considere menos de 1 hora se você não usa o carro todo dia.'
+                        placeholder='Digite quantas horas diárias você estima que utiliza o seu veículo. Considere menos de 1 hora se você não usa o carro todo dia.'
                         onChange={(e) => {
                             let value = e.target.value
                             value = Number.parseInt(value.replace(/\D/g, ''))
@@ -74,6 +73,7 @@ const EntendaOnsurnance = ({ onsurance, handleChange }) => {
                             }
                             handleChange(value, 'ON_HORAS_POR_DIA')
                         }}
+                        onBlur={(e) => e.target.value === '0' ? handleChange(1, 'ON_HORAS_POR_DIA') : null}
                         value={onsurance.horas_por_dia}
                     />
                 </Form.Item>

@@ -66,7 +66,7 @@ const IndexComponent = ({ step, irProximoStep, irStepAnterior, state, handleChan
                             className='card-main'
                             style={ step === 0 ? styles[0] : styles[1]}
                             actions={[
-                                <Button onClick={irStepAnterior} disabled={step === 0} type="link">Anterior</Button>,
+                                <Button onClick={irStepAnterior} disabled={step === 0} type="link" block>Anterior</Button>,
                                 <Button onClick={async () => {
                                     switch(step){
                                         case 0:
@@ -107,7 +107,7 @@ const IndexComponent = ({ step, irProximoStep, irStepAnterior, state, handleChan
                                             .catch(e => message.error('Houve uma falha na comunicação com o servidor, tente mais tarde.', 3, () => irStepAnterior()))
                                             break
                                     }
-                                }} disabled={step === 4} type="link" loading={loading}>Próximo</Button>
+                                }} disabled={step === 4} type="link" loading={loading} block>Próximo</Button>
                             ]}
                         >
                             {

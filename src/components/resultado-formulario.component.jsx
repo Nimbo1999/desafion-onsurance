@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Row, Col } from 'antd'
+import { Card, Row, Col, Button } from 'antd'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 import { selectResults, selectUsuario, selectFormularioVeiculo, selectOnsurance } from '../redux/formulario/formulario.selector'
@@ -12,7 +12,6 @@ const styleCentralizado = {
 }
 
 const ResultadoFormulario = ({ results, usuario, veiculo, onsurance }) => {
-    console.log(results)
     return (
         <div className="centralizar">
             <Row gutter={32}>
@@ -48,7 +47,7 @@ const ResultadoFormulario = ({ results, usuario, veiculo, onsurance }) => {
                         <Col sm={12} md={6}>
                             <IconeCotacao footerText='Consumo anual dos créditos.' icon={faPiggyBank}>
                                 <h1 style={{color: '#2ecc71', textAlign: 'center'}}>
-                                    R$ {results.anualCost}
+                                    R$ {results.anualCost.toFixed(2)}
                                 </h1>
                             </IconeCotacao>
                         </Col>
@@ -61,7 +60,7 @@ const ResultadoFormulario = ({ results, usuario, veiculo, onsurance }) => {
                     <p style={{...styleCentralizado, fontSize: '16px'}}>
                         O Onsurance do pneu do seu {veiculo.tipo_de_veiculo === 'car' ? 'carro' :veiculo.tipo_de_veiculo} aro {veiculo.aro} da marca {veiculo.marca},
                         de valor R${veiculo.total} custa R${results.minuteValue} por minuto!
-                        Considerando seu uso diário de {onsurance.horas_por_dia} horas o crédito inicial durará {results.creditDuration} meses.
+                        Considerando seu uso diário de {onsurance.horas_por_dia} horas o crédito inicial terá duração de {results.creditDuration} meses.
                     </p>
                 </Col>
                 <Col sm={12}>
@@ -70,13 +69,8 @@ const ResultadoFormulario = ({ results, usuario, veiculo, onsurance }) => {
                     </p>
                 </Col>
                 <Col span={12} offset={6} style={{textAlign: 'center'}}>
-                    <a href='https://onsurance.me/produto/' target='blanck'>Contratar Agora!</a>
+                    <Button type="primary" onClick={() => window.location.href = 'https://onsurance.me/produto/credito-inicial-para-protecao-onsurance-carros/'}>Contratar Agora!</Button>
                 </Col>
-                {/* <Col sm={24}>
-                    <p style={{...styleCentralizado, fontSize: '16px'}}>
-                        Cobertura integral de até 100% contra roubo, furto e acidentes!
-                    </p>
-                </Col> */}
             </Row>
         </div>
     )
